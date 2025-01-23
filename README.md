@@ -2,10 +2,10 @@
 
 ## Table of Contents
 
-1. [Project Description]
-2. [Setup Instructions]
-3. [Challenges Faced]
-4. [What I Learned]
+1. Project Description
+2. Setup Instructions
+3. Challenges Faced
+4. What I Learned
 
 ---
 
@@ -19,6 +19,7 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 - **Connect**: Connects to an EC2 instance and retrieves data from RDS.
 - **Kafka Integration**: Creates Kafka topics and sends the data to Kafka via an API proxy.
 - **Store**: The data is then stored in an S3 bucket for later processing.
+- **Read & Process**: Read the data from the S3 bucket into Databricks using SQL
 - **Monitor**: Status is monitored using journal logs to ensure the Kafka REST proxy is receiving data.
 
 ---
@@ -34,13 +35,19 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 3. **Create a `db_creds.yaml` file** containing the database credentials and make sure this file is hidden to avoid uploading sensitive information to GitHub.
 
 4. **Create Kafka topics** for:
-   - `<your_UserId>.pin` – for Pinterest post data
-   - `<your_UserId>.geo` – for geolocation data
-   - `<your_UserId>.user` – for user data
+   - `262542bdae36.pin` – for Pinterest post data
+   - `262542bdae36.geo` – for geolocation data
+   - `262542bdae36.user` – for user data
 
 5. **Modify the `user_posting_emulation.py`** script to send data to the Kafka topics using the API invoke URL.
 
 6. **Run the Kafka API REST proxy service** and monitor the status.
+
+7. **Read Data into Databricks**:
+   - After the data is stored in the S3 bucket, we read it into Databricks using SQL commands to create three DataFrames:
+     - `df_pin` for Pinterest post data
+     - `df_geo` for geolocation data
+     - `df_user` for user data
 
 ## Challenges Faced
 
@@ -68,4 +75,5 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 ### Debugging & Issue Resolution:
 - Encountering issues such as Kafka data format errors and EC2 misconfigurations taught me how to troubleshoot and resolve problems effectively. These experiences helped me understand the importance of proper setup, data formats, and error handling in production pipelines.
 
-
+### Databricks SQL Integration:
+- I learned how to read data from an **S3** bucket into **Databricks** using **SQL** commands.
