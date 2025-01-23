@@ -5,6 +5,8 @@ from multiprocessing import Process
 import boto3
 import json
 import sqlalchemy
+import yaml
+from sqlalchemy import create_engine
 from sqlalchemy import text
 from datetime import datetime
 
@@ -19,19 +21,27 @@ KAFKA_TOPICS = {
 
 class AWSDBConnector:
 
-    def __init__(self):
-        self.HOST = "pinterestdbreadonly.cq2e8zno855e.eu-west-1.rds.amazonaws.com"
-        self.USER = 'project_user'
-        self.PASSWORD = ':t%;yCY3Yjg'
-        self.DATABASE = 'pinterest_data'
-        self.PORT = 3306
-        
+    def __init__(self, yaml_file):
+        self.yaml_file = yaml_file
+        self.db_creds = self.read_db_creds()
+
+    def read_db_creds(self):
+        with open(self.yaml_file, 'r') as file:
+            creds = yaml.safe_load(file)
+        return creds
+
     def create_db_connector(self):
-        engine = sqlalchemy.create_engine(f"mysql+pymysql://{self.USER}:{self.PASSWORD}@{self.HOST}:{self.PORT}/{self.DATABASE}?charset=utf8mb4")
+        HOST = self.db_creds.get('RDS_HOST')
+        USER = self.db_creds.get('RDS_USER')
+        PASSWORD = self.db_creds.get('RDS_PASSWORD')
+        DATABASE = self.db_creds.get('RDS_DATABASE')
+        PORT = self.db_creds.get('RDS_PORT')
+
+        engine = sqlalchemy.create_engine(f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?charset=utf8mb4")
         return engine
 
-
-new_connector = AWSDBConnector()
+new_connector = AWSDBConnector("db_creds.yaml")
+engine = new_connector.create_db_connector()
 
 # Function to send data to Kafka
 def send_to_kafka(topic, data):
