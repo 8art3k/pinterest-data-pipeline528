@@ -49,6 +49,8 @@ The data comes from three tables that represent **user posts**, **geolocation**,
      - `df_geo` for geolocation data
      - `df_user` for user data
 
+---
+
 ## Challenges Faced
 
 ### Kafka Data Format Issues:
@@ -58,6 +60,31 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 ### EC2 Setup Issues:
 - **Problem**: While installing Kafka and the necessary Confluent modules on the EC2 instance, I encountered a storage shortage problem. In my attempt to free up space, I mistakenly deleted files that were essential for running the Kafka API REST Proxy service, which was already running on the EC2 instance.
 - **Solution**: This required setting up a new EC2 instance from scratch with the help of a supporting engineer. The engineer helped ensure Kafka and the API proxy service were correctly installed and configured, allowing me to proceed with the data transmission tasks.
+
+---
+
+## Data Cleaning and Transformation in Databricks
+During the project, several data cleaning and transformation tasks were performed on the three main DataFrames (`df_pin`, `df_geo`, and `df_user`) to ensure consistency and usability for analysis. These tasks included:
+
+- **Handling Missing or Inconsistent Data**: Replaced empty or irrelevant entries with `NULL` values across all tables.
+- **Data Type Corrections**: Converted columns to appropriate data types, ensuring numerical columns were of integer or float type, and string columns were correctly formatted as strings or timestamps.
+- **Column Transformations**: 
+  - Combined relevant columns (e.g., `first_name` and `last_name`) into new columns (e.g., `user_name`).
+  - Created new columns to store cleaned or transformed data (e.g., `coordinates` from latitude and longitude).
+  - Dropped redundant or unnecessary columns (e.g., `latitude`, `longitude`, `first_name`, `last_name`).
+- **Data Standardization**: Standardized column values, such as cleaning the `save_location` column to retain only relevant path data and renaming columns for consistency (e.g., renaming `index` to `ind`).
+
+## Data Analysis
+Several SQL queries were executed to extract meaningful insights from the data. The following key pieces of information were extracted:
+
+-  Identified the most popular category for users based on their country.
+-  Analyzed the number of posts in each category for the years 2018 through 2022.
+-  Found the user with the highest follower count in each country.
+-  Determined the most popular Pinterest categories for different user age groups (`18-24`, `25-35`, `36-50`, and `+50`).
+-  Calculated the median follower count for users in each of the specified age groups.
+-  Counted how many users joined Pinterest between 2015 and 2020.
+-  Determined the median follower count for users who joined between 2015 and 2020.
+-  Calculated the median follower count for users in the age groups of 2015-2020.
 
 ---
 
@@ -77,3 +104,9 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 
 ### Databricks SQL Integration:
 - I learned how to read data from an **S3** bucket into **Databricks** using **SQL** commands.
+
+### Databricks Table Modifications:
+- I learned that in Databricks, direct table modifications such as adding or removing columns are not possible. Instead, transformations are done by creating **temporary views** or **new tables** that reflect the changes or transformations needed for analysis.
+
+### Timestamp Format in Databricks:
+- In Databricks, the timestamp is represented in the ISO 8601 format, which includes the date and time with a `T` separator (e.g., `2021-04-01T00:56:57`). This format ensures consistent handling of timestamp data.
