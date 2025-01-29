@@ -5,7 +5,8 @@
 1. Project Description
 2. Setup Instructions
 3. Challenges Faced
-4. What I Learned
+4. Data Cleaning and Transformation in Databricks
+5. What I Learned
 
 ---
 
@@ -74,7 +75,7 @@ During the project, several data cleaning and transformation tasks were performe
   - Dropped redundant or unnecessary columns (e.g., `latitude`, `longitude`, `first_name`, `last_name`).
 - **Data Standardization**: Standardized column values, such as cleaning the `save_location` column to retain only relevant path data and renaming columns for consistency (e.g., renaming `index` to `ind`).
 
-## Data Analysis
+### Data Analysis
 Several SQL queries were executed to extract meaningful insights from the data. The following key pieces of information were extracted:
 
 -  Identified the most popular category for users based on their country.
