@@ -79,7 +79,7 @@ During the project, several data cleaning and transformation tasks were performe
 Several SQL queries were executed to extract meaningful insights from the data. The following key pieces of information were extracted:
 
 -  Identified the most popular category for users based on their country.
--  Analyzed the number of posts in each category for the years 2018 through 2022.
+-  Analysed the number of posts in each category for the years 2018 through 2022.
 -  Found the user with the highest follower count in each country.
 -  Determined the most popular Pinterest categories for different user age groups (`18-24`, `25-35`, `36-50`, and `+50`).
 -  Calculated the median follower count for users in each of the specified age groups.
