@@ -6,7 +6,8 @@
 2. Setup Instructions
 3. Challenges Faced
 4. Data Cleaning and Transformation in Databricks
-5. What I Learned
+5. Airflow DAG for Databricks Integration
+6. What I Learned
 
 ---
 
@@ -88,9 +89,24 @@ Several SQL queries were executed to extract meaningful insights from the data. 
 -  Calculated the median follower count for users in the age groups of 2015-2020.
 
 ---
+## Airflow DAG for Databricks Integration
+As part of automating the data pipeline, I created an **Airflow DAG** that triggers a Databricks notebook on a daily schedule.
 
+### DAG Details:
+- **DAG Name**: 262542bdae36_dag.
+- **Trigger Schedule**: The DAG runs **daily**.
+- **Integration**: The DAG integrates with the **Databricks environment** and triggers a **notebook** to process data. The DAG was uploaded to the S3 bucket `mwaa-dags-bucket` under the `/dags` directory.
+- **Parameters**: The DAG uses the `DatabricksSubmitRunOperator` to submit a job with a pre-configured Databricks cluster and notebook path.
+
+The key components of the DAG are:
+1. Triggering the execution of a Databricks notebook.
+2. Using an existing Databricks cluster for the job.
+3. Passing parameters to the notebook when executing it.
+
+The **DAG** is uploaded and executed automatically as per the schedule, enabling a seamless automated process for processing data in Databricks.
+
+---
 ## What I Learned
-
 ### Data Pipeline Fundamentals:
 - I gained hands-on experience setting up a data pipeline that integrates various technologies like **Kafka**, **AWS EC2**, and **S3**. This included managing data flow between different components of the system.
 
