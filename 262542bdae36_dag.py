@@ -3,7 +3,7 @@ from airflow.providers.databricks.operators.databricks import DatabricksSubmitRu
 from datetime import datetime, timedelta
 
 notebook_task = {
-    'notebook_path': '/Workspace/Users/malek01@hotmail.co.uk/pinterest_data',
+    'notebook_path': '/Workspace/Users/malek01@hotmail.co.uk/master_notebook',
 }
 
 default_args = {

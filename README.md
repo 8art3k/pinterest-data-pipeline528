@@ -63,6 +63,10 @@ The data comes from three tables that represent **user posts**, **geolocation**,
 - **Problem**: While installing Kafka and the necessary Confluent modules on the EC2 instance, I encountered a storage shortage problem. In my attempt to free up space, I mistakenly deleted files that were essential for running the Kafka API REST Proxy service, which was already running on the EC2 instance.
 - **Solution**: This required setting up a new EC2 instance from scratch with the help of a supporting engineer. The engineer helped ensure Kafka and the API proxy service were correctly installed and configured, allowing me to proceed with the data transmission tasks.
 
+### Databricks Notebook Modularisation:
+- **Problem**: During the data cleaning and transformation process, I initially ran each SQL query task in separate notebooks, thinking it would be easier to organise. However, when I reached the point of scheduling the workflow to run daily via a DAG, I realised that running individual notebooks would not be ideal for automation.
+- **Solution**: This led to an opportunity for improvement: I created a master notebook that consolidates all the other notebooks and runs them sequentially. This solution allowed me to modularise the code efficiently while maintaining the ability to execute the tasks in an automated and scheduled manner. It also provided the flexibility to update or modify individual parts of the process without impacting the whole system.
+
 ---
 
 ## Data Cleaning and Transformation in Databricks
